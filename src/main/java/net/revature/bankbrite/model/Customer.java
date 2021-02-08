@@ -29,17 +29,17 @@ import lombok.NoArgsConstructor;
 public class Customer {
 	
 	public enum Role {
-		ADMIN, USER;
+		ROLE_ADMIN, ROLE_USER;
 	};
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(nullable = false, length = 16)
+	@Column(nullable = false, length = 16, unique=true)
 	private String username;
 	@Column(nullable = false, length = 62)
 	private String password;
-	@Column(nullable = false, length = 40)
+	@Column(nullable = false, length = 40, unique= true)
 	private String email;
 	
 	@Column(nullable= false, length = 5)
