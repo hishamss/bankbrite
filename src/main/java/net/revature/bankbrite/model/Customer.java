@@ -6,7 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +28,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "customer")
 public class Customer {
 	
+	public enum Role {
+		ADMIN, USER;
+	};
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -37,6 +42,9 @@ public class Customer {
 	@Column(nullable = false, length = 40)
 	private String email;
 	
+	@Column(nullable= false, length = 5)
+	@Enumerated(EnumType.ORDINAL)
+	private Role role;
 	@ManyToOne(cascade=CascadeType.REMOVE)
 	@JoinColumn(name = "branch_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
