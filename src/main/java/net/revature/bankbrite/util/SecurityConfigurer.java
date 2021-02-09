@@ -2,6 +2,7 @@ package net.revature.bankbrite.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -29,7 +30,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TODO Auto-generated method stub
-		web.ignoring().antMatchers("/customer/add");
+		web.ignoring()
+		.antMatchers("/customer/add")
+		.antMatchers("/signin");
+		
 	}
 	
 	// To configure the Autherization 
@@ -43,8 +47,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		.and().formLogin();
 	}
 	
-//	@Bean
-//	public PasswordEncoder getPasswordEncoder() { return NoOpPasswordEncoder.getInstance();}
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		// TODO Auto-generated method stub
+		return super.authenticationManagerBean();
+	}
 	
 	@Bean
 	public PasswordEncoder encoder() {
