@@ -3,6 +3,7 @@ package net.revature.bankbrite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +20,18 @@ public class CustomerController {
 	@Autowired
 	private CustomerRepo customerRepo;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@GetMapping
 	public List<Customer> getAllCustomers() {
 		return customerRepo.findAll();
 	}
 	
-	@PostMapping
+	@PostMapping("/add")
 	public Customer addCustomer (@RequestBody Customer customer) {
 		
+		customer.setPassword(passwordEncoder.encode(customer.getPassword()));
 		return customerRepo.save(customer);
 		
 	}

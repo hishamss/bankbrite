@@ -1,9 +1,8 @@
 package net.revature.bankbrite.dto;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,18 +14,19 @@ import net.revature.bankbrite.model.Customer;
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
-	private List<GrantedAuthority> authorities;
+	private List<GrantedAuthority> authorities = new ArrayList<>();
 	
 	public MyUserDetails(Customer customer) {
 		
 		this.username = customer.getUsername();
 		this.password = customer.getPassword();
-		this.authorities = Arrays.stream(new String[] {customer.getRole().name()})
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-		
+		this.authorities.add(new SimpleGrantedAuthority(customer.getRole().name()));
 	}
 
 	@Override
