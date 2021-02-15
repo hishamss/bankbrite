@@ -25,6 +25,8 @@ public class MyUserDetailsService implements UserDetailsService{
 		
 		customer.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
 		
+		// Using method referencing instead of lambda expression
+		//return customer.map((c) -> new MyUserDetails(c)).get();
 		return customer.map(MyUserDetails::new).get();
 	}
 

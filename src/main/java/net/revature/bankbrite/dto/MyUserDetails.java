@@ -27,11 +27,14 @@ public class MyUserDetails implements UserDetails{
 		this.username = customer.getUsername();
 		this.password = customer.getPassword();
 		this.authorities.add(new SimpleGrantedAuthority(customer.getRole().name()));
+		this.authorities.add(new SimpleGrantedAuthority(customer.getEmail()));
+		
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
+		System.out.println(authorities.get(0));
 		return authorities;
 		
 	}
@@ -47,7 +50,7 @@ public class MyUserDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		return username;
 	}
-
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
