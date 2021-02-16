@@ -1,6 +1,7 @@
 package net.revature.bankbrite.dto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,31 +13,31 @@ import lombok.NoArgsConstructor;
 import net.revature.bankbrite.model.Customer;
 
 @NoArgsConstructor
-public class MyUserDetails implements UserDetails{
-	
+public class MyUserDetails implements UserDetails {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
-	private List<GrantedAuthority> authorities = new ArrayList<>();
-	
+//	private List<GrantedAuthority> authorities = new ArrayList<>();
+	private List<GrantedAuthority> authorities;
+
 	public MyUserDetails(Customer customer) {
-		
+
 		this.username = customer.getUsername();
 		this.password = customer.getPassword();
-		this.authorities.add(new SimpleGrantedAuthority(customer.getRole().name()));
-		this.authorities.add(new SimpleGrantedAuthority(customer.getEmail()));
-		
+		this.authorities = Arrays.asList(new SimpleGrantedAuthority(customer.getRole().name()),
+				new SimpleGrantedAuthority(customer.getEmail()), new SimpleGrantedAuthority(customer.getUsername()));
+
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		System.out.println(authorities.get(0));
 		return authorities;
-		
+
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class MyUserDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		return username;
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -74,6 +75,5 @@ public class MyUserDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
 
 }
