@@ -28,7 +28,7 @@ public class CustomerController {
 		return customerRepo.findAll();
 	}
 	
-	@PostMapping("/add")
+	@PostMapping
 	public Customer addCustomer (@RequestBody Customer customer) {
 		
 		customer.setPassword(passwordEncoder.encode(customer.getPassword()));

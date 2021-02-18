@@ -19,6 +19,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +42,8 @@ public class Customer {
 	@Column(nullable = false, length = 16, unique=true)
 	private String username;
 	@Column(nullable = false, length = 62)
+	// give the user authorization to add password but not returning the password back to the user when fetching from DB
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	@Column(nullable = false, length = 40, unique= true)
 	private String email;
