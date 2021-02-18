@@ -1,6 +1,5 @@
 package net.revature.bankbrite.dto;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +20,6 @@ public class MyUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
-//	private List<GrantedAuthority> authorities = new ArrayList<>();
 	private List<GrantedAuthority> authorities;
 
 	public MyUserDetails(Customer customer) {
@@ -29,7 +27,7 @@ public class MyUserDetails implements UserDetails {
 		this.username = customer.getUsername();
 		this.password = customer.getPassword();
 		this.authorities = Arrays.asList(new SimpleGrantedAuthority(customer.getRole().name()),
-				new SimpleGrantedAuthority(customer.getEmail()), new SimpleGrantedAuthority(customer.getUsername()));
+				new SimpleGrantedAuthority(customer.getEmail()));
 
 	}
 

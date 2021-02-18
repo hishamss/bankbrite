@@ -22,9 +22,7 @@ public class MyUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Optional<Customer> customer = customerRepo.findByUsername(username);
-		
-		customer.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
-		
+		customer.orElseThrow(() -> new UsernameNotFoundException("not found " + username));
 		// Using method referencing instead of lambda expression
 		//return customer.map((c) -> new MyUserDetails(c)).get();
 		return customer.map(MyUserDetails::new).get();

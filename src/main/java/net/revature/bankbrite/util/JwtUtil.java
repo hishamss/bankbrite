@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +39,7 @@ public class JwtUtil {
 		List<GrantedAuthority> authorities = new ArrayList<>(userDetails.getAuthorities());
 		claims.put("role", authorities.get(0).getAuthority());
 		claims.put("email", authorities.get(1).getAuthority());
-		claims.put("username", authorities.get(2).getAuthority());
+		claims.put("username", userDetails.getUsername());
 		final Instant now = Instant.now();
 		final Date expiryDate = Date.from(now.plus(TOKEN_VALIDITY));
 		return Jwts.builder().setClaims(claims).setExpiration(expiryDate).setIssuedAt(Date.from(now))

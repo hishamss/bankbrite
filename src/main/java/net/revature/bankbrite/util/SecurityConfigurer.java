@@ -10,8 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import net.revature.bankbrite.filters.JwtEveryRequestFilter;
@@ -24,6 +28,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	JwtEveryRequestFilter jwtEveryRequestFilter;
+	
 
 	// To configure the Authentication
 	@Override
@@ -50,8 +55,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(jwtEveryRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		http.authorizeRequests().antMatchers("/branch").hasRole("ADMIN").antMatchers("/customer").hasAnyRole("ADMIN",
 				"USER");
+		
+		
+		
 
 	}
+	
+
 
 	@Bean
 	@Override
@@ -59,6 +69,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 		return super.authenticationManagerBean();
 	}
+	
+	
 
 	@Bean
 	public PasswordEncoder encoder() {
